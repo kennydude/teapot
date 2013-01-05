@@ -36,6 +36,7 @@ public class BuildPropManager extends Properties {
 		File file = new File(tempFile);
     	try {
     		load(new FileInputStream(file));
+    		log("loaded prop with "+ this.size()+ " elements");
 		} catch (IOException e) {
 			log("Error opening file: " + e);
 		}
@@ -72,8 +73,9 @@ public class BuildPropManager extends Properties {
 		try {
             process = Runtime.getRuntime().exec("su");
 	        os = new DataOutputStream(process.getOutputStream());
-	        os.writeBytes("mount -o remount,rw -t yaffs2 /dev/block/mtdblock4 /system\n");
+	        os.writeBytes("mount -o remount,rw /system\n");
 	        os.writeBytes("cp -f /system/build.prop " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/build.prop.bak\n");
+	        os.writeBytes("mount -o remount,ro /system\n");
 	        os.writeBytes("exit\n");
 	        os.flush();
 	        process.waitFor();
@@ -100,9 +102,10 @@ public class BuildPropManager extends Properties {
 		try {
             process = Runtime.getRuntime().exec("su");
 	        os = new DataOutputStream(process.getOutputStream());
-	        os.writeBytes("mount -o remount,rw -t yaffs2 /dev/block/mtdblock4 /system\n");
+	        os.writeBytes("mount -o remount,rw /system\n");
 	        os.writeBytes("cp -f /system/build.prop " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/buildprop.tmp\n");
 	        os.writeBytes("chmod 777 " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/buildprop.tmp\n");
+	        os.writeBytes("mount -o remount,ro /system\n");
 	        os.writeBytes("exit\n");
 	        os.flush();
 	        process.waitFor();
@@ -131,8 +134,9 @@ public class BuildPropManager extends Properties {
 	        os = new DataOutputStream(process.getOutputStream());
 	        os.writeBytes("mount -o remount,rw -t yaffs2 /dev/block/mtdblock4 /system\n");
 	        os.writeBytes("mv -f /system/build.prop /system/build.prop.bak\n");
-	        os.writeBytes("busybox cp -f " + propReplaceFile + " /system/build.prop\n");
+	        os.writeBytes("cp -f " + propReplaceFile + " /system/build.prop\n");
 	        os.writeBytes("chmod 644 /system/build.prop\n");
+	        os.writeBytes("mount -o remount,rw /system\n");
 	        //os.writeBytes("mount -o remount,ro -t yaffs2 /dev/block/mtdblock4 /system\n");
 	        //os.writeBytes("rm " + propReplaceFile);
 	        //os.writeBytes("rm " + tempFile);
