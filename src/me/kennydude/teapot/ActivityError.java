@@ -68,6 +68,9 @@ public class ActivityError extends Activity {
 					ApplicationInfo ai = pm.getApplicationInfo(aer.packageName, PackageManager.GET_META_DATA);
 					
 					Bundle meta = ai.metaData;
+					if(meta == null){
+						meta = new Bundle();
+					}
 					
 					if(meta.containsKey("DEVELOPER_EMAIL")){
 						Intent email = new Intent(Intent.ACTION_SENDTO);
