@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Teapot</string>
+    <string name="activate">Activate Teapot</string>
+    <string name="deactivate">Deactivate Teapot</string>
+    <string name="please_wait">Please wait</string>
+    <string name="manual_report">Manaul Report</string>
+    <string name="credits">Teapot icon is from the Noun Project\n\nLog:</string>
+    <string name="automatic_report">Automatic Report!</string>
+    <string name="info">When activating or deactivating Teapot, root will be required as it needs to edit build.prop to work. Once completed, you may need to restart your device for changes to take effect. A backup will be created</string>
+</resources>
